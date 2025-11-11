@@ -6,19 +6,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DECIMAL
 
-#DATABASE_URL = "postgresql://admin:JVoBXtBaUS2dQA0didZETSh8lonxCbBI@dpg-d496ttje5dus73cj2b1g-a/bdkayham"
-DATABASE_URL = "postgresql://admin:JVoBXtBaUS2dQA0didZETSh8lonxCbBI@dpg-d496ttje5dus73cj2b1g-a.oregon-postgres.render.com/bdkayham"
+DATABASE_URL = "postgresql://admin:S5sou6y5U6PiQHnFbQQDiDDcSRSCxSpf@dpg-d493atf5r7bs738u8f4g-a.oregon-postgres.render.com:5432/dbaulasdrummond"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, 
                             bind=engine)
 Base = declarative_base()
+
 # -------------------- Banco de Dados --------------------
 # Modelo de tabela
 class Livro(Base):
     __tablename__ = "livros"
-    id = Column(Integer, primary_key=True, index=True)
-    titulo = Column(String(200), index=True)    
+    titulo = Column(String(200))
     preco = Column(DECIMAL(15, 2))
     disponibilidade = Column(Boolean)
     avaliacao = Column(DECIMAL(10))
@@ -49,16 +48,15 @@ def get_db():
 
 @app.get("/livros")
 def listar_livros(db=Depends(get_db)):
-    # Inclua o 'id' na lista de campos retornados
-    livros = db.query(Livro.id, Livro.titulo, Livro.preco).all()
+    livros = db.query(Livro.titulo, Livro.preco).all()
     return livros
 
-@app.get("/livros/{livro_id}") 
-def get_livro(livro_id: int, db=Depends(get_db)): # O parâmetro agora é um inteiro
-    livro = db.query(Livro).filter(Livro.id == livro_id).first() # Busca pelo ID
+@app.get("/livro/{nome}")
+def get_livro(nome: str, db=Depends(get_db)):
+    livro = db.query(Livro).filter(Livro.titulo == nome).first()
     if not livro:
-        raise HTTPException(status_code=404, detail=f"Livro com ID {livro_id} não encontrado")
+        raise HTTPException(status_code=404, detail="Livro não encontrado")
     return livro
 
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="0.0.0.0", port=5001)
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=5001)
