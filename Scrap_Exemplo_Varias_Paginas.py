@@ -5,9 +5,9 @@ import csv
 import psycopg2
 
 DB_HOST = "dpg-d496ttje5dus73cj2b1g-a.oregon-postgres.render.com"
-DB_NAME = "dbkayham"  
-DB_USER = "admin"   
-DB_PASS = "JVoBXtBaUS2dQA0didZETSh8lonxCbBI"      
+DB_NAME = "bdkayham"
+DB_USER = "admin"
+DB_PASS = "JVoBXtBaUS2dQA0didZETSh8lonxCbBI"  
 DB_PORT = "5432"
 
 def inserir_livro(dados: dict):
