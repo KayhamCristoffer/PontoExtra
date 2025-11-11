@@ -24,4 +24,7 @@ EXPOSE 8000
 # O 'gunicorn' é o servidor de produção que rodará o 'uvicorn', proporcionando um desempenho melhor e mais seguro.
 # O '-w 4' define 4 workers, que é uma boa prática para a maioria das CPUs.
 # O '--bind 0.0.0.0:8000' faz com que o servidor escute em todas as interfaces de rede na porta 8000.
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "main:app"]
+
+# CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "main:app"]
+
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
