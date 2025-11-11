@@ -6,7 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DECIMAL
 
-DATABASE_URL = "postgresql://admin:JVoBXtBaUS2dQA0didZETSh8lonxCbBI@dpg-d496ttje5dus73cj2b1g-a/bdkayham"
+#DATABASE_URL = "postgresql://admin:JVoBXtBaUS2dQA0didZETSh8lonxCbBI@dpg-d496ttje5dus73cj2b1g-a/bdkayham"
+DATABASE_URL = "postgresql://admin:JVoBXtBaUS2dQA0didZETSh8lonxCbBI@dpg-d496ttje5dus73cj2b1g-a.oregon-postgres.render.com/bdkayham"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, 
@@ -59,5 +60,4 @@ def get_livro(nome: str, db=Depends(get_db)):
     return livro
 
 #if __name__ == "__main__":
-
 #    uvicorn.run(app, host="0.0.0.0", port=5001)
