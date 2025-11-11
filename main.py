@@ -52,24 +52,6 @@ def listar_livros(db=Depends(get_db)):
     # Modificação: Usar db.query(Livro).all() para retornar TODOS os campos de cada objeto Livro.
     livros = db.query(Livro).all()
     return livros
-    
-@app.get("/livros/search/{nome}")
-def search_livros(nome: str, db=Depends(get_db)):
-    """
-    Busca livros por nome (título), usando uma pesquisa insensível a maiúsculas/minúsculas.
-    """
-    # Usamos .ilike() do SQLAlchemy para pesquisa case-insensitive com wildcards (%)
-    # O % antes e depois permite buscar livros que CONTENHAM o termo.
-    termo_pesquisa = f"%{nome.lower()}%"
-    
-    livros = db.query(Livro).filter(
-        func.lower(Livro.titulo).like(termo_pesquisa)
-    ).all()
-    
-    if not livros:
-        raise HTTPException(status_code=404, detail=f"Nenhum livro encontrado com o nome '{nome}'")
-        
-    return livros
 
 @app.get("/livros/{livro_id}") 
 def get_livro(livro_id: int, db=Depends(get_db)): # O parâmetro agora é um inteiro
