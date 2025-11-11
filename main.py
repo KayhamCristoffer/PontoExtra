@@ -17,7 +17,7 @@ Base = declarative_base()
 # Modelo de tabela
 class Livro(Base):
     __tablename__ = "livros"
-    titulo = Column(String(200))
+    titulo = Column(String(200),primary_key=True,index=True)
     preco = Column(DECIMAL(15, 2))
     disponibilidade = Column(Boolean)
     avaliacao = Column(DECIMAL(10))
